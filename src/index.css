@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #0B0D10;
+  --color-graphite: #12161B;
+  --color-hairline: #232A33;
+  --color-bone: #E8E6E1;
+  --color-muted: #9AA1AB;
+  --color-signal: #FF5B2E;
+  --color-verified: #5CE1C8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: "Inter Tight", system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Subtle film grain texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  /* Focus visible accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0B0D10;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #232A33;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF5B2E;
+  }
+}
+
+/* Hairline technical borders */
+.border-hairline {
+  border-color: #232A33;
+}
+
+/* Soft ambient radial spot */
+.radial-spot {
+  background: radial-gradient(circle at 50% 30%, rgba(92, 225, 200, 0.04) 0%, rgba(11, 13, 16, 0) 70%);
+}
+
+.radial-spot-signal {
+  background: radial-gradient(circle at 70% 40%, rgba(255, 91, 46, 0.04) 0%, rgba(11, 13, 16, 0) 70%);
+}
+
+/* Infinite Marquee Ticker */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Glassmorphism subtle rules for nav & modal */
+.glass-panel {
+  background: rgba(18, 22, 27, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(35, 42, 51, 0.8);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
